@@ -1,0 +1,614 @@
+    0   SUB I sp I3
+    5  MOVE I r2 I6
+   10  MOVE R r1 sp
+   12  MOVE I r0 I4
+   17   SYS R r0 r0
+   19  MOVM R r10 r1 # R10 초기화
+   21  MOVE I r0 I5
+   26   SYS R r0 r0
+   28  MOVE R r9 r0 # CANARY SETTING
+   30  CALL I pc I4 # CALL 39
+   35   XOR R r0 r0
+   37   SYS R r0 r0
+
+   
+# [R10]: 다이어리 개수
+# [R10+3 : R10+33]: 다이어리 주소?
+
+# MAIN FUNCTION
+   39  PUSH R bp r0
+   41  MOVE R bp sp
+   43   SUB I sp I6
+   48  MOVE R r5 bp
+   50   SUB I r5 I3
+   55  MVMM R r9 r5
+   57  MOVE I r0 I1731
+   62  CALL I pc I1566 # CALL 1633 (PRINT STRING)
+   67  CALL I pc I162 # CALL 234
+   72  MOVE I r0 I2471
+   77  CALL I pc I1551 # CALL 1633 (PRINT STRING)
+   82  MOVE R r5 bp
+   84   SUB I r5 I6
+   89  MVMM R zero r5
+   91  MOVE I r1 I3
+   96  MOVE R r0 r5
+   98  CALL I pc I1448 # CALL 1551 (READ)
+  103  MOVE R r5 bp
+  105   SUB I r5 I6
+  110 MOVML R r6 r5
+  112  CMPL I r6 I49
+  117 BRNZR I pc I10 # BRNZR 132
+  122  CALL I pc I175 # CALL 302 (1번)
+  127   JMP I pc I75 # JMP 207
+  132  CMPL I r6 I50
+  137 BRNZR I pc I10 # BRNZR 152
+  142  CALL I pc I349 # CALL 496 (2번)
+  147   JMP I pc I55 # JMP 207
+  152  CMPL I r6 I51
+  157 BRNZR I pc I10 # BRNZR 172
+  162  CALL I pc I626 # CALL 793 (3번)
+  167   JMP I pc I35 # JMP 207
+  172  CMPL I r6 I52
+  177 BRNZR I pc I10 # BRNZR 192
+  182  CALL I pc I919 # CALL 1106 (4번)
+  187   JMP I pc I15 # JMP 207
+  192  CMPL I r6 I53
+  197 BRNZR I pc I5 # BRNZR 207
+  202   JMP I pc I5 # JMP 212
+  207   JMP I pc I2097012 # JMP 72 (5번이 아니라면 반복)
+  212  MOVE R r5 bp (5번일 경우 종료)
+  214   SUB I r5 I3
+  219  MOVM R r6 r5
+  221   CMP R r6 r9
+  223 BRNZR I pc I1209 # BRNZR 1437
+  228  MOVE R sp bp
+  230   POP R bp r0
+  232   POP R pc r0
+
+# [R10 : R10+33]을 NULL로 채운다.
+  234  PUSH R bp r0
+  236  MOVE R bp sp
+  238   SUB I sp I3
+  243  MOVE R r5 bp
+  245   SUB I r5 I3 
+  250  MVMM R r9 r5  #[bp - 3] <- r9
+  252  MOVE R r5 r10 
+  254  MVMM R zero r5 # [r10] <- 0
+  256  MOVE R r5 r10
+  258   ADD I r5 I3 # r5 <- r10 + 3
+  263  MOVE I r2 I30 
+  268  MOVE I r1 I0
+  273  MOVE R r0 r5 # r10+3, 0, 30
+  275  CALL I pc I1171 # CALL 1451 (SETBUF)
+  280  MOVE R r5 bp
+  282   SUB I r5 I3
+  287  MOVM R r6 r5
+  289   CMP R r6 r9
+  291 BRNZR I pc I1141 # BRNZR 1437
+  296  MOVE R sp bp
+  298   POP R bp r0
+  300   POP R pc r0
+
+  # Menu 1번
+  302  PUSH R bp r0
+  304  MOVE R bp sp
+  306   SUB I sp I9
+  311  MOVE R r5 bp
+  313   SUB I r5 I3
+  318  MVMM R r9 r5
+  320  MOVE R r5 bp
+  322   SUB I r5 I6
+  327  MOVE I r6 I1
+  332  MVMM R r6 r5 # [bp - 6] <- 1
+  334  MOVE I r0 I2262
+  339  CALL I pc I1289 # CALL 1633 (PRINT STRING)
+  344  MOVE I r0 I2275
+  349  CALL I pc I1279 # CALL 1633 (PRINT STRING)
+  354  MOVE R r5 bp
+  356   SUB I r5 I6
+  361  MOVM R r6 r5 # r6 <- [bp - 6]
+  363  MOVE R r5 r10
+  365  MOVM R r7 r5 # r7 <- [R10]
+  367   CMP R r6 r7
+  369 BRNON I pc I90 # BRNON 464
+  374  MOVE R r5 bp
+  376   SUB I r5 I9
+  381  MOVE R r7 r6
+  383   ADD I r7 I48
+  388 MVMML R r7 r5 # [bp - 9] <- char화된 r6
+  390   INC R r5 r0 
+  392  MOVE I r7 I41
+  397 MVMML R r7 r5 # [bp - 8] <- 41
+  399   INC R r5 r0
+  401 MVMML R zero r5 # [bp - 7] <- 0
+  403  MOVE R r5 bp 
+  405   SUB I r5 I9
+  410  MOVE R r0 r5
+  412  CALL I pc I1216 # CALL 1633 (PRINT STRING)           ( 1), 2), 3) 를 출력 )
+  417  MOVE R r5 bp
+  419   SUB I r5 I6
+  424  MOVM R r0 r5 # r0 <- [bp - 6]
+  426  CALL I pc I1285 # CALL 1716 (GET VALUE FROM ARR)     ( 다이어리 주소 얻어음 )
+  431  CALL I pc I1197 # CALL 1633 (PRINT STRING)           ( 다이어리 제목 출력 )
+  436  MOVE I r0 I2514
+  441  CALL I pc I1187 # CALL 1633 (PRINT STRING)           ( 개행 문자 )
+  446  MOVE R r5 bp
+  448   SUB I r5 I6
+  453  MOVM R r6 r5
+  455   INC R r6 r0
+  457  MVMM R r6 r5 # [bp - 6] 1 증가
+  459   JMP I pc I2097042 # JMP 354
+  464  MOVE I r0 I2275
+  469  CALL I pc I1159 # CALL 1633 (PRINT STRING)
+  474  MOVE R r5 bp
+  476   SUB I r5 I3
+  481  MOVM R r6 r5
+  483   CMP R r6 r9
+  485 BRNZR I pc I947 # BRNZR 1437
+  490  MOVE R sp bp
+  492   POP R bp r0
+  494   POP R pc r0
+
+  # Menu 2번
+  496  PUSH R bp r0
+  498  MOVE R bp sp
+  500   SUB I sp I6
+  505  MOVE R r5 bp
+  507   SUB I r5 I3
+  512  MVMM R r9 r5
+  514  MOVE R r5 r10
+  516  MOVM R r6 r5
+  518   CMP I r6 I9
+  523 BRNEG I pc I15 # BRNEG 543   (다이어리 개수가 9개보다 적은 경우)
+  528  MOVE I r0 I2329
+  533  CALL I pc I1095 # CALL 1633 (PRINT STRING)
+  538   JMP I pc I228 # JMP 771 (9개 넘으면 끝)
+  543   INC R r6 r0
+  545  MVMM R r6 r5 # [R10] ++
+  547  MOVE I r2 I6 # r2 <- 6
+  552  MOVE R r5 bp
+  554   SUB I r5 I6
+  559  MOVE R r1 r5 # r1 <- bp - 6
+  561  MOVE I r0 I4
+  566   SYS R r0 r0 # 4, bp-6, 6 (Memory allocate, [r1]에 주소가 써있게 된다)
+  568  MOVE R r5 bp 
+  570   SUB I r5 I6
+  575  MOVM R r7 r5 # r7 <- [bp-6]
+  577  MOVE R r5 r10 # r5 <- r10
+  579  MOVE R r8 r6 # r8 <- [r10]
+  581   MUL I r8 I3 
+  586   ADD R r5 r8 # r5 <- r10 + [r10] * 3
+  588  MVMM R r7 r5 # 제목을 옮긴다 
+  590  MOVE I r0 I2354
+  595  CALL I pc I1033 # CALL 1633 (PRINT STRING)
+  600  MOVE R r5 bp
+  602   SUB I r5 I6
+  607  MOVM R r6 r5
+  609  MOVE I r1 I30
+  614  MOVE R r0 r6
+  616  CALL I pc I930 # CALL 1551 (READ) 30자를 읽어온다
+  621   DEC R r0 r0  
+  623  MOVE R r5 bp
+  625   SUB I r5 I6
+  630  MOVM R r6 r5
+  632   ADD R r6 r0
+  634 MVMML R zero r6 # 입력한 STRING 마지막 NULL 처리
+  636  MOVE I r0 I2369
+  641  CALL I pc I987 # CALL 1633 (PRINT STRING)
+  646  MOVE R r5 bp
+  648   SUB I r5 I6
+  653  MOVM R r6 r5
+  655   ADD I r6 I30
+  660  MOVE I r1 I1200
+  665  MOVE R r0 r6
+  667  CALL I pc I879 # CALL 1551 (READ)   # 30자 떨어진 곳에 내용을 읽어온다
+  672   DEC R r0 r0
+  674  MOVE R r5 bp
+  676   SUB I r5 I6
+  681  MOVM R r6 r5
+  683   ADD I r6 I30
+  688   ADD R r6 r0
+  690 MVMML R zero r6 # 입력한 STRING 마지막 NULL 처리
+  692  MOVE R r5 bp
+  694   SUB I r5 I6
+  699  MOVM R r6 r5
+  701   ADD I r6 I1260
+  706  MOVE R r1 r0
+  708  MOVE R r0 r6
+  710  CALL I pc I836 # CALL 1551 (READ)   # 내용과 똑같은 길이를 READ
+  715  MOVE R r5 bp
+  717   SUB I r5 I6
+  722  MOVM R r6 r5
+  724  MOVE R r7 r6
+  726   ADD I r6 I30   # [bp-6] + 30
+  731   ADD I r7 I1260 # [bp-6] + 1260
+  736   XOR R r8 r8    # r8 <- 0
+  738   CMP I r8 I1200
+  743 BRZRO I pc I23 # BRZRO 771
+  748   XOR R r5 r5
+  750   XOR R r4 r4
+  752 MOVML R r5 r6 # r5 <- [r6]
+  754 MOVML R r4 r7 # r4 <- [r7]
+  756   XOR R r5 r4 
+  758 MVMML R r5 r6 # [r6] <- r5 ^ r4
+  760   INC R r6 r0
+  762   INC R r7 r0
+  764   INC R r8 r0
+  766   JMP I pc I2097119 # JMP 738
+  771  MOVE R r5 bp
+  773   SUB I r5 I3
+  778  MOVM R r6 r5
+  780   CMP R r6 r9
+  782 BRNZR I pc I650 # BRNZR 1437
+  787  MOVE R sp bp
+  789   POP R bp r0
+  791   POP R pc r0
+
+  # Menu 3번
+  793  PUSH R bp r0
+  795  MOVE R bp sp
+  797   SUB I sp I1209
+  802  MOVE R r5 bp
+  804   SUB I r5 I3
+  809  MVMM R r9 r5
+  811  MOVE I r0 I2428
+  816  CALL I pc I812 # CALL 1633 (PRINT STRING)
+  821  MOVE I r1 I2
+  826  MOVE R r5 bp
+  828   SUB I r5 I6
+  833  MOVE R r0 r5
+  835  CALL I pc I711 # CALL 1551 (READ)
+  840   XOR R r6 r6
+  842  MOVE R r5 bp
+  844   SUB I r5 I6
+  849 MOVML R r6 r5
+  851  CMPL I r6 I49
+  856 BRNEG I pc I223 # BRNEG 1084
+  861  CMPL I r6 I57
+  866 BRNON I pc I213 # BRNON 1084
+  871  SUBL I r6 I48
+  876  MOVE R r5 r10
+  878  MOVM R r7 r5
+  880   CMP R r6 r7
+  882 BRNON I pc I197 # BRNON 1084
+  887  MOVE R r0 r6
+  889  CALL I pc I822 # CALL 1716 (GET VALUE FROM ARR)
+  894  MOVE R r5 bp
+  896   SUB I r5 I9
+  901  MVMM R r0 r5
+  903  MOVE I r0 I2275
+  908  CALL I pc I720 # CALL 1633 (PRINT STRING)
+  913  MOVE I r0 I2361
+  918  CALL I pc I710 # CALL 1633 (PRINT STRING)
+  923  MOVE R r5 bp
+  925   SUB I r5 I9
+  930  MOVM R r0 r5
+  932  CALL I pc I696 # CALL 1633 (PRINT STRING)
+  937  MOVE I r0 I2514
+  942  CALL I pc I686 # CALL 1633 (PRINT STRING)
+  947  MOVE I r0 I2275
+  952  CALL I pc I676 # CALL 1633 (PRINT STRING)
+  957  MOVE I r2 I1200
+  962  MOVE R r5 bp
+  964   SUB I r5 I9
+  969  MOVM R r5 r5
+  971   ADD I r5 I30
+  976  MOVE R r1 r5
+  978  MOVE R r5 bp
+  980   SUB I r5 I1209
+  985  MOVE R r0 r5
+  987  CALL I pc I505 # CALL 1497 (STRCPY)
+  992  MOVE R r5 bp
+  994   SUB I r5 I1209
+  999  MOVE R r6 r5
+ 1001  MOVE R r5 bp
+ 1003   SUB I r5 I9
+ 1008  MOVM R r7 r5
+ 1010   ADD I r7 I1260
+ 1015   XOR R r8 r8
+ 1017   CMP I r8 I1200
+ 1022 BRZRO I pc I23 # BRZRO 1050
+ 1027   XOR R r5 r5
+ 1029   XOR R r4 r4
+ 1031 MOVML R r5 r6
+ 1033 MOVML R r4 r7
+ 1035   XOR R r5 r4
+ 1037 MVMML R r5 r6
+ 1039   INC R r6 r0
+ 1041   INC R r7 r0
+ 1043   INC R r8 r0
+ 1045   JMP I pc I2097119 # JMP 1017
+ 1050  MOVE R r5 bp
+ 1052   SUB I r5 I1209
+ 1057  MOVE R r0 r5
+ 1059  CALL I pc I569 # CALL 1633 (PRINT STRING)
+ 1064  MOVE I r0 I2514
+ 1069  CALL I pc I559 # CALL 1633 (PRINT STRING)
+ 1074  MOVE I r0 I2275
+ 1079  CALL I pc I549 # CALL 1633 (PRINT STRING)
+ 1084  MOVE R r5 bp
+ 1086   SUB I r5 I3
+ 1091  MOVM R r6 r5
+ 1093   CMP R r6 r9
+ 1095 BRNZR I pc I337 # BRNZR 1437
+ 1100  MOVE R sp bp
+ 1102   POP R bp r0
+ 1104   POP R pc r0
+
+ # Menu 4번
+ 1106  PUSH R bp r0
+ 1108  MOVE R bp sp
+ 1110   SUB I sp I9
+ 1115  MOVE R r5 bp
+ 1117   SUB I r5 I3
+ 1122  MVMM R r9 r5
+ 1124  MOVE I r0 I2428
+ 1129  CALL I pc I499 # CALL 1633 (PRINT STRING)
+ 1134  MOVE I r1 I2
+ 1139  MOVE R r5 bp
+ 1141   SUB I r5 I6
+ 1146  MOVE R r0 r5
+ 1148  CALL I pc I398 # CALL 1551 (READ)
+ 1153   XOR R r6 r6
+ 1155  MOVE R r5 bp
+ 1157   SUB I r5 I6
+ 1162 MOVML R r6 r5
+ 1164  CMPL I r6 I49
+ 1169 BRNEG I pc I241 # BRNEG 1415
+ 1174  CMPL I r6 I57
+ 1179 BRNON I pc I231 # BRNON 1415
+ 1184  SUBL I r6 I48
+ 1189  MOVE R r5 r10
+ 1191  MOVM R r7 r5
+ 1193   CMP R r6 r7
+ 1195 BRNON I pc I215 # BRNON 1415
+ 1200  MOVE R r0 r6
+ 1202  CALL I pc I509 # CALL 1716 (GET VALUE FROM ARR)
+ 1207  MOVE R r5 bp
+ 1209   SUB I r5 I9
+ 1214  MVMM R r0 r5 # [bp-9] <- str addr
+ 1216  MOVE I r0 I2354
+ 1221  CALL I pc I407 # CALL 1633 (PRINT STRING)
+ 1226  MOVE R r5 bp
+ 1228   SUB I r5 I9
+ 1233  MOVM R r6 r5
+ 1235  MOVE I r1 I30
+ 1240  MOVE R r0 r6
+ 1242  CALL I pc I304 # CALL 1551 (READ)
+ 1247   DEC R r0 r0
+ 1249  MOVE R r5 bp
+ 1251   SUB I r5 I9
+ 1256  MOVM R r6 r5
+ 1258   ADD R r6 r0
+ 1260 MVMML R zero r6
+ 1262  MOVE I r0 I2405
+ 1267  CALL I pc I361 # CALL 1633 (PRINT STRING)
+ 1272  MOVE R r5 bp
+ 1274   SUB I r5 I9
+ 1279  MOVM R r6 r5
+ 1281   ADD I r6 I30
+ 1286  MOVE I r1 I1200
+ 1291  MOVE R r0 r6
+ 1293  CALL I pc I253 # CALL 1551 (READ)
+ 1298   DEC R r0 r0
+ 1300  MOVE R r5 bp
+ 1302   SUB I r5 I9
+ 1307  MOVM R r6 r5
+ 1309   ADD I r6 I30
+ 1314   ADD R r6 r0
+ 1316 MVMML R zero r6
+ 1318  MOVE I r0 I2415
+ 1323  CALL I pc I305 # CALL 1633 (PRINT STRING)
+ 1328  MOVE R r5 bp
+ 1330   SUB I r5 I9
+ 1335  MOVM R r6 r5
+ 1337   ADD I r6 I1260
+ 1342  MOVE R r0 r6
+ 1344  CALL I pc I284 # CALL 1633 (PRINT STRING)
+ 1349  MOVE I r0 I2514
+ 1354  CALL I pc I274 # CALL 1633 (PRINT STRING)
+ 1359  MOVE R r5 bp
+ 1361   SUB I r5 I9
+ 1366  MOVM R r6 r5
+ 1368  MOVE R r7 r6
+ 1370   ADD I r6 I30
+ 1375   ADD I r7 I1260
+ 1380   XOR R r8 r8
+ 1382   CMP I r8 I1200
+ 1387 BRZRO I pc I23 # BRZRO 1415
+ 1392   XOR R r5 r5
+ 1394   XOR R r4 r4
+ 1396 MOVML R r5 r6
+ 1398 MOVML R r4 r7
+ 1400   XOR R r5 r4
+ 1402 MVMML R r5 r6
+ 1404   INC R r6 r0
+ 1406   INC R r7 r0
+ 1408   INC R r8 r0
+ 1410   JMP I pc I2097119 # JMP 1382
+ 1415  MOVE R r5 bp
+ 1417   SUB I r5 I3
+ 1422  MOVM R r6 r5
+ 1424   CMP R r6 r9
+ 1426 BRNZR I pc I6 # BRNZR 1437
+ 1431  MOVE R sp bp
+ 1433   POP R bp r0
+ 1435   POP R pc r0
+
+# STACK SMASH (CANARY)
+ 1437  MOVE I r0 I2436
+ 1442  CALL I pc I186 # CALL 1633 (PRINT STRING)
+ 1447   XOR R r0 r0
+ 1449   SYS R r0 r0
+ 
+# setbuf: R0 Buffer를 R2 size만큼 R1 문자로 채우기
+ 1451  PUSH R r0 r0
+ 1453  PUSH R r1 r0
+ 1455  PUSH R r2 r0
+ 1457  PUSH R r9 r0
+ 1459   CMP I r2 I0
+ 1464 BRZRO I pc I11 # BRZRO 1480
+ 1469 MVMML R r1 r0
+ 1471   INC R r0 r0
+ 1473   DEC R r2 r0
+ 1475   JMP I pc I2097131 # JMP 1459
+ 1480   POP R r6 r0
+ 1482   CMP R r6 r9
+ 1484 BRNZR I pc I2097100 # BRNZR 1437
+ 1489   POP R r2 r0
+ 1491   POP R r1 r0
+ 1493   POP R r0 r0
+ 1495   POP R pc r0
+
+# strcpy: R1버퍼에서 R0버퍼로 R2만큼 옮긴다.
+ 1497  PUSH R r0 r0
+ 1499  PUSH R r1 r0
+ 1501  PUSH R r2 r0
+ 1503  PUSH R r3 r0
+ 1505  PUSH R r9 r0
+ 1507   CMP I r2 I0
+ 1512 BRZRO I pc I15 # BRZRO 1532
+ 1517 MOVML R r3 r1 r3 <- [r1]L
+ 1519 MVMML R r3 r0 [r0] <- r3
+ 1521   INC R r0 r0
+ 1523   INC R r1 r0
+ 1525   DEC R r2 r0
+ 1527   JMP I pc I2097127 # JMP 1507
+ 1532   POP R r6 r0
+ 1534   CMP R r6 r9
+ 1536 BRNZR I pc I2097048 # BRNZR 1437
+ 1541   POP R r3 r0
+ 1543   POP R r2 r0
+ 1545   POP R r1 r0
+ 1547   POP R r0 r0
+ 1549   POP R pc r0
+
+ # Read From Stdin. R0: Buffer, R1: Size
+ 1551  PUSH R r1 r0
+ 1553  PUSH R r2 r0
+ 1555  PUSH R r3 r0
+ 1557  PUSH R r9 r0
+ 1559  MOVE R r3 r1
+ 1561  MOVE R r2 r0
+ 1563  MOVE I r1 I0
+ 1568  MOVE I r0 I3
+ 1573   SYS R r0 r0
+ 1575   POP R r6 r0
+ 1577   CMP R r6 r9
+ 1579 BRNZR I pc I2097005 # BRNZR 1437
+ 1584   POP R r3 r0
+ 1586   POP R r2 r0
+ 1588   POP R r1 r0
+ 1590   POP R pc r0
+
+ # Write To Stdout. R0: Buffer, R1: Size
+ 1592  PUSH R r1 r0
+ 1594  PUSH R r2 r0
+ 1596  PUSH R r3 r0
+ 1598  PUSH R r9 r0
+ 1600  MOVE R r3 r1
+ 1602  MOVE R r2 r0
+ 1604  MOVE I r1 I1
+ 1609  MOVE I r0 I2
+ 1614   SYS R r0 r0
+ 1616   POP R r6 r0
+ 1618   CMP R r6 r9
+ 1620 BRNZR I pc I2096964 # BRNZR 1437
+ 1625   POP R r3 r0
+ 1627   POP R r2 r0
+ 1629   POP R r1 r0
+ 1631   POP R pc r0
+
+# PRINT STRING AT R0
+ 1633  PUSH R r0 r0
+ 1635  PUSH R r1 r0
+ 1637  PUSH R r9 r0
+ 1639  MOVE R r1 r0
+ 1641  CALL I pc I22 # CALL 1668 (STRLEN)
+ 1646  SWAP R r0 r1
+ 1648  CALL I pc I2097091 # CALL 1592 (WRITE)
+ 1653   POP R r6 r0
+ 1655   CMP R r6 r9
+ 1657 BRNZR I pc I2096927 # BRNZR 1437
+ 1662   POP R r1 r0
+ 1664   POP R r0 r0
+ 1666   POP R pc r0
+
+# STRLEN (R0 주소로)
+ 1668  PUSH R r1 r0
+ 1670  PUSH R r2 r0
+ 1672  PUSH R r9 r0
+ 1674   XOR R r1 r1 
+ 1676   XOR R r2 r2 # r1, r2 0
+ 1678 MOVML R r2 r0 # r2L <- [r0]L
+ 1680  CMPL I r2 I0
+ 1685 BRZRO I pc I9 # BRZRO 1699
+ 1690   INC R r0 r0
+ 1692   INC R r1 r0
+ 1694   JMP I pc I2097131 # JMP 1678
+ 1699   POP R r6 r0
+ 1701   CMP R r6 r9
+ 1703 BRNZR I pc I2096881 # BRNZR 1437
+ 1708  MOVE R r0 r1
+ 1710   POP R r2 r0
+ 1712   POP R r1 r0
+ 1714   POP R pc r0
+
+# Get Array value: r0 <- [r0 * 3 + r10]
+ 1716  MOVE R r5 r10 
+ 1718  MOVE R r6 r0
+ 1720   MUL I r6 I3
+ 1725   ADD R r5 r6
+ 1727  MOVM R r0 r5
+ 1729   POP R pc r0
+
+ 1731   MUL R bp pc
+ 1733   MUL R bp pc
+ 1735   MUL R bp pc
+ 1737   MUL R bp pc
+ 1739   MUL R bp pc
+ 1741   MUL R bp pc
+ 1743   MUL R bp pc
+ 1745   MUL R bp pc
+ 1747   MUL R bp pc
+ 1749   MUL R bp pc
+ 1751   MUL R bp pc
+ 1753   MUL R bp pc
+ 1755   MUL R bp pc
+ 1757   MUL R bp pc
+ 1759   MUL R bp pc
+ 1761   MUL R bp pc
+ 1763   MUL R bp pc
+ 1765   MUL R bp pc
+ 1767   MUL R bp pc
+ 1769   MUL R bp pc
+ 1771   MUL R bp pc
+ 1773   MUL R bp pc
+ 1775   MUL R bp pc
+ 1777   MUL R bp pc
+ 1779   MUL R bp pc
+ 1781   MUL R bp pc
+ 1783  MVMM I r7 I528416
+ 1788   SYS R r2 r0
+ 1790   SYS R r2 r0
+ 1792   SYS R r2 r0
+ 1794   SYS R r2 r0
+ 1796   SYS R r2 r0
+ 1798   SYS R r2 r0
+ 1800   SYS R r2 r0
+ 1802   SYS R r2 r0
+ 1804   ORR I sp I1352387
+ 1809   XOR R r5 zero
+ 1811   INC R r4 r9
+ 1813   DIV R pc r2
+ 1815   MOD R r10 r0
+ 1817   SYS R r2 r0
+ 1819   SYS R r2 r0
+ 1821   SYS R r2 r0
+ 1823   SYS R r2 r0
+ 1825   SYS R r2 r0
+ 1827   SYS R r2 r0
+ 1829   SYS R r2 r0
+ 1831   SYS R r2 r0
+ 1833   SYS R r2 r0
+[VM] Invalid instruction
